@@ -1,0 +1,45 @@
+.layout-wrapper {
+  display: flex;
+}
+
+/* Content always on RIGHT side */
+.content-wrapper {
+  margin-left: 240px;      /* sidebar width */
+  padding: 20px;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Force sidebar LEFT */
+.sidebar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 240px !important;
+  height: 100vh;
+  z-index: 1000;
+}
+
+/* Force content to RIGHT */
+.content-wrapper {
+  margin-left: 240px !important;
+  padding: 20px;
+  min-height: 100vh;
+  background: #f5f7fb;
+}

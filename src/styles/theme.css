@@ -1,0 +1,56 @@
+/* 🔒 Disable horizontal scroll for whole app */
+html, body {
+  overflow-x: hidden !important;
+}
+
+
+:root {
+  /* Brand */
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --primary-soft: #eef0ff;
+
+  /* Sidebar */
+  --sidebar-bg: #1f2937;
+  --sidebar-hover: #374151;
+
+  /* Surface */
+  --surface: #ffffff;
+  --surface-soft: #f3f4f6;
+
+  /* Text */
+  --text-dark: #111827;
+  --text-muted: #6b7280;
+
+  /* Border */
+  --border: #e5e7eb;
+
+  /* Status Colors */
+  --success: #16a34a;
+  --warning: #eab308;
+  --danger: #dc2626;
+  --info: #2563eb;
+}
+
+/* Smooth UI */
+body {
+  background: var(--surface-soft);
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+.page-wrapper {
+  width: 100% !important;
+  max-width: 1180px !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 28px rgba(0,0,0,.05);
+  
+}
+
+
+

@@ -1,49 +1,38 @@
 .sidebar {
   width: 240px;
   height: 100vh;
-  background: #4e4e85;
-  color: #fff;
-  padding: 20px;
   position: fixed;
+  left: 0;
+  top: 0;
+  background: var(--sidebar-bg);
+  padding: 22px;
+  color: #fff;
 }
 
 .logo {
-  margin-bottom: 25px;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
 }
 
 .menu {
   list-style: none;
   padding: 0;
-}
-
-.menu li {
-  margin: 12px 0;
+  margin-top: 10px;
 }
 
 .menu li a {
-  text-decoration: none;
-  color: #ddd;
-  padding: 10px 12px;
   display: block;
-  border-radius: 6px;
-  transition: 0.3s;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #cbd5e1;
+  transition: .25s;
 }
 
-.menu li a:hover {
-  background: #343454;
-  color: #fff;
-}
-
-.menu li.active a {
-  background: #696cff;
-  color: white;
-  font-weight: 600;
-}
-
-
+.menu li a:hover,
 .menu li a.active {
-  background: #4c6ef5;
+  background: var(--sidebar-hover);
   color: #fff;
-  border-radius: 6px;
   font-weight: 600;
+  transform: translateX(4px);
 }

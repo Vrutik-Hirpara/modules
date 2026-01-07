@@ -1,0 +1,115 @@
+.table-wrapper {
+  width: 100%;
+  max-width: 1180px;
+  margin: auto;
+}
+
+
+
+.table-pro {
+  min-width: 1000px;   /* forces scroll instead of page widening */
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Header */
+.table-pro thead th {
+  background: #fafafa;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Rows */
+.table-pro td,
+.table-pro th {
+  height: 64px;
+  vertical-align: middle;
+  padding: 12px 14px;
+}
+
+/* Hover */
+.table-pro tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Fixed Column Widths */
+.table-img { width: 70px; }
+.table-name { width: 100px; }
+.table-text { width: 260px; }
+.table-actions { width: 120px; }
+/* Ensure same widths for header + body */
+.table-pro th.table-img,
+.table-pro td.table-img,
+.table-pro th.table-name,
+.table-pro td.table-name,
+/* .table-pro th.table-text, */
+.table-pro td.table-text,
+.table-pro th.table-actions,
+.table-pro td.table-actions {
+  width: inherit;
+}
+
+
+/* Image Column */
+.table-img img {
+  width: 68px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+/* Status Pills */
+.status-pill {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+}
+.active-pill  { background:#ecfdf5; color:#047857; }
+.inactive-pill{ background:#f5f3ff; color:#6d28d9; }
+
+/* Buttons */
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border: none;
+}
+.btn-primary   { background: var(--primary); color:#fff; }
+.btn-warning   { background:#facc15; }
+.btn-info      { background:#38bdf8; }
+.btn-danger    { background:#ef4444; color:#fff; }
+.btn-secondary { background:#e5e7eb; color:#111827; }
+
+.btn:hover { opacity:.92; }
+
+/* Page Header (Title + Button) */
+.page-header,
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* Prevent table overflow */
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-y: hidden;
+  display: block;
+}
+
+
+
+
+/* Action buttons stay in one line */
+.table-actions {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+} 

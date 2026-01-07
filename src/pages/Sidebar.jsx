@@ -11,20 +11,28 @@ export default function Sidebar() {
           <NavLink to="/dashboard">Dashboard</NavLink>
         </li>
 
-        <li>
-          <NavLink to="/bed">Bed</NavLink>
-        </li>
+  
         <li>
           <NavLink to="/banners">Banner</NavLink>
         </li>
-        <li>
-          <NavLink to="/counseler">Councellers</NavLink>
-        </li>
+
         <li>
           <NavLink to="/testimonials">Testimonials</NavLink>
         </li>
          <li>
           <NavLink to="/course">Courses</NavLink>
+        </li>
+          <li>
+          <NavLink to="/category">Category</NavLink>
+        </li>
+          <li>
+          <NavLink to="/articles">Articles</NavLink>
+        </li>
+                <li>
+          <NavLink to="/module">Modules</NavLink>
+        </li>
+                <li>
+          <NavLink to="/topics">Topics</NavLink>
         </li>
       </ul>
     </div>

@@ -1,0 +1,56 @@
+.welcome-banner {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(135deg,#6366f1,#818cf8);
+  color:#fff;
+  padding:18px;
+  border-radius:18px;
+  margin-top:4px;
+}
+
+.primary-btn {
+  background:#fff;
+  color:#4f46e5;
+  padding:8px 14px;
+  border-radius:10px;
+  font-weight:600;
+  border:none;
+}
+
+/* Stats Layout */
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-top:20px;
+}
+
+.stat-card {
+  background:#fff;
+  padding:16px;
+  border-radius:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+
+.stat-card .icon {
+  font-size:26px;
+  color:#4f46e5;
+}
+
+.badge {
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:12px;
+}
+
+.success { background:#e8fff1; color:#0c8a43; }
+.info { background:#e6f1ff; color:#1c4ed8; }
+.warning { background:#fff3cd; color:#9c6d00; }
+.danger { background:#ffe4e4; color:#b42318; }
+
+.footer {
+  margin-top:25px;
+  text-align:center;
+  color:#777;
+}
