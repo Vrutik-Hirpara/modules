@@ -5,7 +5,6 @@ import Dashboard from "./pages/Dashboard";
 import Banners from "./pages/Banners";
 import Testimonials from "./pages/Testimonials";
 import Courses from "./pages/Courses";
-import "./styles/layout.css";
 import "./styles/sidebar.css";
 import "./styles/dashboard.css";
 import "./styles/table.css";
