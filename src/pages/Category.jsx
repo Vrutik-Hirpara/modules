@@ -106,7 +106,8 @@ export default function Category() {
                   <th className="table-img">Image</th>
                   <th>Name</th>
                   <th className="wrap-col">Description</th>
-              
+                                <th>Action</th>
+
                 </tr>
               </thead>
 

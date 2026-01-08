@@ -20,10 +20,8 @@
 
 
 /* ---------- TABLE CARD CONTAINER ---------- */
-.table-scroll {
-  width: 100%;
-  overflow-x: auto;
-}
+
+
 
 /* scrollbar */
 .table-scroll::-webkit-scrollbar { height: 8px; }
@@ -36,10 +34,18 @@
 }
 
 /* ---------- TABLE ---------- */
-.table-pro {
-  min-width: 1500px;   /* enough for all columns */
-  table-layout: fixed;
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;        /* scroll only if needed */
 }
+
+.table-pro {
+  width: max-content;     /* 🔥 KEY LINE */
+  min-width: 100%;        /* fills container if small */
+  border-collapse: collapse;
+}
+
+
 
 /* ---------- MULTILINE WRAP COLUMN ---------- */
 .wrap-col {
