@@ -1,0 +1,18 @@
+.layout-wrapper {
+  display: flex;
+}
+
+.content-wrapper {
+  margin-left: 240px;
+  padding: 26px;
+  min-height: 100vh;
+  background: var(--surface-soft);
+    flex: 1;
+
+}
+/* Prevent layout from creating sideways scroll */
+.layout-wrapper,
+.content-wrapper,
+.page-wrapper {
+  overflow-x: hidden !important;
+}
