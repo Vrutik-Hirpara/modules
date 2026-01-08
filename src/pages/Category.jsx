@@ -14,6 +14,7 @@ export default function Category() {
   const [editId, setEditId] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [viewData, setViewData] = useState(null);
+  const [currentImage, setCurrentImage] = useState(null);
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: { name: "", text: "" }
@@ -48,6 +49,8 @@ export default function Category() {
   const handleEdit = (row) => {
     setEditId(row.id);
     setViewData(null);
+    setCurrentImage(row.image);   // ✅ ADD
+
     setShowForm(true);
     reset({
       name: row.name,
@@ -83,10 +86,17 @@ export default function Category() {
 
             <button
               className="btn btn-primary mb-2"
-              onClick={() => setShowForm(true)}
+              onClick={() => {
+                reset();
+                setEditId(null);
+                setViewData(null);
+                setCurrentImage(null);   // ✅ ADD
+                setShowForm(true);
+              }}
             >
               Add Category
             </button>
+
           </div>
 
           <div className="table-scroll">
@@ -96,7 +106,7 @@ export default function Category() {
                   <th className="table-img">Image</th>
                   <th>Name</th>
                   <th className="wrap-col">Description</th>
-                  <th className="table-actions">Actions</th>
+              
                 </tr>
               </thead>
 
@@ -152,7 +162,7 @@ export default function Category() {
           <h4>
             {isView ? "View Category"
               : editId ? "Update Category"
-              : "Add Category"}
+                : "Add Category"}
           </h4>
 
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -179,13 +189,15 @@ export default function Category() {
               <div className="col-md-12 mt-2">
                 <label>Category Image</label>
 
-                {isView && viewData?.image && (
+                {currentImage && (
                   <img
-                    src={buildImageUrl(viewData.image)}
-                    width={110}
-                    className="d-block mb-2"
+                    src={buildImageUrl(currentImage)}
+                    width={100}
+                    height={100}
+                    className="d-block mb-2 border rounded object-fit-cover"
                   />
                 )}
+
 
                 {!isView && (
                   <input
@@ -207,10 +219,12 @@ export default function Category() {
                   setShowForm(false);
                   setEditId(null);
                   setViewData(null);
+                  setCurrentImage(null);   // ✅ ADD
                 }}
               >
                 Back to List
               </button>
+
 
               {!isView && (
                 <button type="submit" className="btn btn-primary">

@@ -14,6 +14,7 @@ export default function Articles() {
   const [editId, setEditId] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [viewData, setViewData] = useState(null);   // 👁️ view mode
+const [currentImage, setCurrentImage] = useState(null);
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -56,29 +57,35 @@ export default function Articles() {
     fetchData();
   };
 
-  const handleEdit = (row) => {
-    setEditId(row.id);
-    setViewData(null);
-    setShowForm(true);
-    reset({
-      course: row.course,
-      tag: row.tag,
-      description: row.description,
-      text: row.text
-    });
-  };
+const handleEdit = (row) => {
+  setEditId(row.id);
+  setViewData(null);
+  setCurrentImage(row.image);   // ✅ ADD
+  setShowForm(true);
 
-  const handleView = (row) => {
-    setViewData(row);
-    setEditId(null);
-    setShowForm(true);
-    reset({
-      course: row.course,
-      tag: row.tag,
-      description: row.description,
-      text: row.text
-    });
-  };
+  reset({
+    course: row.course,
+    tag: row.tag,
+    description: row.description,
+    text: row.text
+  });
+};
+
+
+const handleView = (row) => {
+  setViewData(row);
+  setEditId(null);
+  setCurrentImage(row.image);   // ✅ ADD
+  setShowForm(true);
+
+  reset({
+    course: row.course,
+    tag: row.tag,
+    description: row.description,
+    text: row.text
+  });
+};
+
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete article?")) return;
@@ -94,12 +101,19 @@ export default function Articles() {
           <div className="card-header-row">
             <h2>Articles</h2>
 
-            <button
-              className="btn btn-primary mb-2"
-              onClick={() => { setShowForm(true); reset(); }}
-            >
-              Add Article
-            </button>
+          <button
+  className="btn btn-primary mb-2"
+  onClick={() => {
+    reset();
+    setEditId(null);
+    setViewData(null);
+    setCurrentImage(null);   // ✅ ADD
+    setShowForm(true);
+  }}
+>
+  Add Article
+</button>
+
           </div>
 
           <div className="table-scroll">
@@ -211,13 +225,15 @@ export default function Articles() {
               <div className="col-md-12 mt-2">
                 <label>Article Image</label>
 
-                {isView && viewData?.image && (
-                  <img
-                    src={buildImageUrl(viewData.image)}
-                    width={140}
-                    className="d-block mb-2"
-                  />
-                )}
+    {currentImage && (
+  <img
+    src={buildImageUrl(currentImage)}
+    width={100}
+    height={100}
+    className="d-block mb-2 border rounded object-fit-cover"
+  />
+)}
+
 
                 {!isView && (
                   <input
@@ -231,18 +247,20 @@ export default function Articles() {
             </div>
 
             <div className="mt-3">
-              <button
-                type="button"
-                className="btn btn-secondary me-2"
-                onClick={() => {
-                  reset();
-                  setShowForm(false);
-                  setEditId(null);
-                  setViewData(null);
-                }}
-              >
-                Back to List
-              </button>
+          <button
+  type="button"
+  className="btn btn-secondary me-2"
+  onClick={() => {
+    reset();
+    setShowForm(false);
+    setEditId(null);
+    setViewData(null);
+    setCurrentImage(null);   // ✅ ADD
+  }}
+>
+  Back to List
+</button>
+
 
               {!isView && (
                 <button type="submit" className="btn btn-primary">

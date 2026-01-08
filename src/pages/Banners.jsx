@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
 import { buildImageUrl } from "../services/image.helper";
 
 import {
@@ -15,6 +16,8 @@ export default function Banner() {
   const [editId, setEditId] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [viewData, setViewData] = useState(null);   // 👁️ VIEW MODE
+  const [currentImage, setCurrentImage] = useState(null);
+
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -56,31 +59,36 @@ export default function Banner() {
     fetchBanners();
   };
 
-  const handleView = (b) => {
-    setViewData(b);
-    setEditId(null);
-    setShowForm(true);
+const handleView = (b) => {
+  setViewData(b);
+  setEditId(null);
+  setCurrentImage(b.image);   // ✅ ADD THIS
+  setShowForm(true);
 
-    reset({
-      CTA_text: b.CTA_text,
-      CTA_link: b.CTA_link,
-      status: b.status,
-      order: b.order
-    });
-  };
+  reset({
+    CTA_text: b.CTA_text,
+    CTA_link: b.CTA_link,
+    status: b.status,
+    order: b.order
+  });
+};
 
-  const handleEdit = (b) => {
-    setEditId(b.id);
-    setViewData(null);
-    setShowForm(true);
 
-    reset({
-      CTA_text: b.CTA_text,
-      CTA_link: b.CTA_link,
-      status: b.status,
-      order: b.order
-    });
-  };
+const handleEdit = (b) => {
+  setEditId(b.id);
+  setViewData(null);
+  setCurrentImage(b.image);
+  setShowForm(true);
+
+  reset({
+    CTA_text: b.CTA_text,
+    CTA_link: b.CTA_link,
+    status: b.status,
+    order: b.order
+  });
+};
+
+
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete banner?")) return;
@@ -96,9 +104,19 @@ export default function Banner() {
           <div className="card-header-row">
             <h2>Banners</h2>
 
-            <button className="btn btn-primary mb-2" onClick={() => setShowForm(true)}>
-              Add Banner
-            </button>
+           <button
+  className="btn btn-primary mb-2"
+  onClick={() => {
+    reset();
+    setEditId(null);
+    setViewData(null);
+    setCurrentImage(null);   // ✅ ADD
+    setShowForm(true);
+  }}
+>
+  Add Banner
+</button>
+
           </div>
 
           <div className="table-scroll">
@@ -201,9 +219,15 @@ export default function Banner() {
               <div className="col-md-12 mt-2">
                 <label>Banner Image</label>
 
-                {isView && viewData?.image && (
-                  <img src={buildImageUrl(viewData.image)} width={140} className="d-block mb-2" />
-                )}
+                {currentImage && (
+  <img
+    src={buildImageUrl(currentImage)}
+      width={100}
+      height={100}
+    className="d-block mb-2 border rounded"
+  />
+)}
+
 
                 {!isView && (
                   <input type="file" className="form-control" {...register("image")} />
@@ -214,12 +238,19 @@ export default function Banner() {
 
             <div className="mt-3">
               <button
-                type="button"
-                className="btn btn-secondary me-2"
-                onClick={() => { reset(); setShowForm(false); setEditId(null); setViewData(null); }}
-              >
-                Back to List
-              </button>
+  type="button"
+  className="btn btn-secondary me-2"
+  onClick={() => {
+    reset();
+    setShowForm(false);
+    setEditId(null);
+    setViewData(null);
+    setCurrentImage(null);   // ✅ ADD
+  }}
+>
+  Back to List
+</button>
+
 
               {!isView && (
                 <button type="submit" className="btn btn-primary">

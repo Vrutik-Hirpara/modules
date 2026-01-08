@@ -5,24 +5,7 @@
   max-width: 1180px;
   margin: auto;
 }
-/* Image column smaller */
-.table-img {
-  width: 100px !important;   /* column width */
-    width: 90px;                 /* reduce image column width */
-  text-align: center;
-}
-.CAT_text{
-    width: 100px !important;   /* column width */
-
-}
-.order{
-      width: 100px !important;   /* column width */
-
-}
-.status{
-      width: 90px !important;   /* column width */
-
-}
+/*  */
 
 /* Thumbnail size */
 .table-img img {
@@ -39,20 +22,7 @@
 /* ---------- TABLE CARD CONTAINER ---------- */
 .table-scroll {
   width: 100%;
-  max-width: 100%;
-  display: block;
-
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  box-shadow: 0 25px 40px -10px rgba(0,0,0,.06);
-
-  /* scroll only when needed */
-  overflow-x: auto;      /* enable horizontal scroll */
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-    position: relative;    /* <-- required in some layouts */
-
+  overflow-x: auto;
 }
 
 /* scrollbar */
@@ -67,15 +37,8 @@
 
 /* ---------- TABLE ---------- */
 .table-pro {
-    width: max-content;    /* <-- table allowed to grow */
-  min-width: 100%;  
-  width: 100%;
-  min-width: 900px;       /* scroll only if smaller screen */
-  table-layout: fixed;    /* keeps layout stable */
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: 14px;
-  overflow: hidden;
+  min-width: 1500px;   /* enough for all columns */
+  table-layout: fixed;
 }
 
 /* ---------- MULTILINE WRAP COLUMN ---------- */
@@ -119,3 +82,51 @@
   margin-bottom: 8px;
 }
 
+/* Break long words safely */
+.wrap-col {
+  white-space: normal;       /* allow wrapping */
+  word-break: break-word;    /* break long words */
+  overflow-wrap: anywhere;   /* modern browsers */
+  max-width: 220px;          /* control column width */
+}
+
+/* Optional: name column control */
+.col-name {
+  max-width: 180px;
+  word-break: break-word;
+}
+/* Description column with internal scroll */
+.desc-col {
+  min-width: 320px;          /* ✅ increase width */
+  max-width: 320px;
+  max-height: 90px;          /* ✅ visible height */
+  overflow-y: auto;          /* ✅ vertical scrollbar */
+  overflow-x: hidden;
+  white-space: normal;
+  word-break: break-word;
+  padding-right: 6px;
+  line-height: 1.4;
+}
+
+/* Optional: smooth scrollbar (Chrome/Edge) */
+.desc-col::-webkit-scrollbar {
+  width: 6px;
+}
+
+.desc-col::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.desc-col::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Name column – long word wrapping */
+.name-col {
+  max-width: 200px;           /* control width */
+  white-space: normal;        /* allow wrapping */
+  word-break: break-word;     /* break long words */
+  overflow-wrap: anywhere;    /* modern browser support */
+  line-height: 1.4;
+}
