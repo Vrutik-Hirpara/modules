@@ -13,7 +13,7 @@ export default function Category() {
   const [categories, setCategories] = useState([]);
   const [editId, setEditId] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [viewData, setViewData] = useState(null);   // 👁️ view mode flag
+  const [viewData, setViewData] = useState(null);
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: { name: "", text: "" }
@@ -33,7 +33,6 @@ export default function Category() {
     fd.append("name", values.name);
     fd.append("text", values.text || "");
 
-    // 🚫 Block submit in VIEW mode
     if (viewData) return;
 
     editId
@@ -48,7 +47,7 @@ export default function Category() {
 
   const handleEdit = (row) => {
     setEditId(row.id);
-    setViewData(null);        // ✨ edit mode
+    setViewData(null);
     setShowForm(true);
     reset({
       name: row.name,
@@ -57,7 +56,7 @@ export default function Category() {
   };
 
   const handleView = (row) => {
-    setViewData(row);         // 👁️ view mode
+    setViewData(row);
     setEditId(null);
     setShowForm(true);
     reset({
@@ -72,7 +71,7 @@ export default function Category() {
     fetchCategories();
   };
 
-  const isView = Boolean(viewData);  // helper flag
+  const isView = Boolean(viewData);
 
   return (
     <div className="page-wrapper">
@@ -82,7 +81,10 @@ export default function Category() {
           <div className="card-header-row">
             <h2>Categories</h2>
 
-            <button className="btn btn-primary" onClick={() => setShowForm(true)}>
+            <button
+              className="btn btn-primary mb-2"
+              onClick={() => setShowForm(true)}
+            >
               Add Category
             </button>
           </div>
@@ -93,7 +95,7 @@ export default function Category() {
                 <tr>
                   <th className="table-img">Image</th>
                   <th>Name</th>
-                  <th>Description</th>
+                  <th className="wrap-col">Description</th>
                   <th className="table-actions">Actions</th>
                 </tr>
               </thead>
@@ -109,18 +111,31 @@ export default function Category() {
                     </td>
 
                     <td>{c.name}</td>
-                    <td>{c.text || "-"}</td>
+
+                    {/* 👇 multiline wrapping enabled */}
+                    <td className="wrap-col">
+                      {c.text || "-"}
+                    </td>
 
                     <td className="table-actions">
-                      <button className="btn btn-info btn-sm" onClick={() => handleView(c)}>
+                      <button
+                        className="btn btn-info btn-sm"
+                        onClick={() => handleView(c)}
+                      >
                         View
                       </button>
 
-                      <button className="btn btn-warning btn-sm ms-2" onClick={() => handleEdit(c)}>
+                      <button
+                        className="btn btn-warning btn-sm ms-2"
+                        onClick={() => handleEdit(c)}
+                      >
                         Edit
                       </button>
 
-                      <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(c.id)}>
+                      <button
+                        className="btn btn-danger btn-sm ms-2"
+                        onClick={() => handleDelete(c.id)}
+                      >
                         Delete
                       </button>
                     </td>
@@ -132,6 +147,7 @@ export default function Category() {
           </div>
         </>
       ) : (
+
         <div className="card p-3 shadow">
           <h4>
             {isView ? "View Category"
@@ -172,7 +188,11 @@ export default function Category() {
                 )}
 
                 {!isView && (
-                  <input type="file" className="form-control" {...register("image")} />
+                  <input
+                    type="file"
+                    className="form-control"
+                    {...register("image")}
+                  />
                 )}
               </div>
 
@@ -182,7 +202,12 @@ export default function Category() {
               <button
                 type="button"
                 className="btn btn-secondary me-2"
-                onClick={() => { reset(); setShowForm(false); setEditId(null); setViewData(null); }}
+                onClick={() => {
+                  reset();
+                  setShowForm(false);
+                  setEditId(null);
+                  setViewData(null);
+                }}
               >
                 Back to List
               </button>

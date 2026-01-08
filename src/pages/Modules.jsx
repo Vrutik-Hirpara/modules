@@ -71,7 +71,7 @@ export default function Modules() {
                         <h2>Modules</h2>
 
                         <button
-                            className="btn btn-primary"
+                            className="btn btn-primary mb-2"
                             onClick={() => { setShowForm(true); reset(); }}
                         >
                             Add Module

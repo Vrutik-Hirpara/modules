@@ -1,115 +1,121 @@
+
+/* ---------- TABLE WRAPPER ---------- */
 .table-wrapper {
   width: 100%;
   max-width: 1180px;
   margin: auto;
 }
+/* Image column smaller */
+.table-img {
+  width: 100px !important;   /* column width */
+    width: 90px;                 /* reduce image column width */
+  text-align: center;
+}
+.CAT_text{
+    width: 100px !important;   /* column width */
 
+}
+.order{
+      width: 100px !important;   /* column width */
 
+}
+.status{
+      width: 90px !important;   /* column width */
 
-.table-pro {
-  min-width: 1000px;   /* forces scroll instead of page widening */
-  width: 100%;
-  table-layout: fixed;
 }
 
-/* Header */
+/* Thumbnail size */
+.table-img img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+    display: block;
+  margin: 0 auto;              /* image center */
+  border-radius: 10px;
+}
+
+
+/* ---------- TABLE CARD CONTAINER ---------- */
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 25px 40px -10px rgba(0,0,0,.06);
+
+  /* scroll only when needed */
+  overflow-x: auto;      /* enable horizontal scroll */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+    position: relative;    /* <-- required in some layouts */
+
+}
+
+/* scrollbar */
+.table-scroll::-webkit-scrollbar { height: 8px; }
+.table-scroll::-webkit-scrollbar-thumb {
+  background: #c7cdd6;
+  border-radius: 10px;
+}
+.table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #9aa3b2;
+}
+
+/* ---------- TABLE ---------- */
+.table-pro {
+    width: max-content;    /* <-- table allowed to grow */
+  min-width: 100%;  
+  width: 100%;
+  min-width: 900px;       /* scroll only if smaller screen */
+  table-layout: fixed;    /* keeps layout stable */
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* ---------- MULTILINE WRAP COLUMN ---------- */
+.wrap-col {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.6;
+}
+
+/* allow row height to expand */
+.table-pro tr { height: auto !important; }
+
+/* ---------- CELLS ---------- */
+.table-pro td,
+.table-pro th {
+  padding: 12px 14px;
+  vertical-align: top;
+}
+.table-pro td{
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* ---------- HEADER ---------- */
 .table-pro thead th {
   background: #fafafa;
-  padding: 12px 14px;
   font-size: 13px;
   font-weight: 600;
   color: #374151;
   border-bottom: 1px solid var(--border);
-}
-
-/* Rows */
-.table-pro td,
-.table-pro th {
-  height: 64px;
+    text-align: center;
   vertical-align: middle;
-  padding: 12px 14px;
 }
 
-/* Hover */
+/* ---------- HOVER ---------- */
 .table-pro tbody tr:hover {
   background: #f9fafb;
 }
-
-/* Fixed Column Widths */
-.table-img { width: 70px; }
-.table-name { width: 100px; }
-.table-text { width: 260px; }
-.table-actions { width: 120px; }
-/* Ensure same widths for header + body */
-.table-pro th.table-img,
-.table-pro td.table-img,
-.table-pro th.table-name,
-.table-pro td.table-name,
-/* .table-pro th.table-text, */
-.table-pro td.table-text,
-.table-pro th.table-actions,
-.table-pro td.table-actions {
-  width: inherit;
+.button{
+  margin-bottom: 8px;
 }
 
-
-/* Image Column */
-.table-img img {
-  width: 68px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-}
-
-/* Status Pills */
-.status-pill {
-  padding: 6px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 999px;
-}
-.active-pill  { background:#ecfdf5; color:#047857; }
-.inactive-pill{ background:#f5f3ff; color:#6d28d9; }
-
-/* Buttons */
-.btn {
-  border-radius: 10px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border: none;
-}
-.btn-primary   { background: var(--primary); color:#fff; }
-.btn-warning   { background:#facc15; }
-.btn-info      { background:#38bdf8; }
-.btn-danger    { background:#ef4444; color:#fff; }
-.btn-secondary { background:#e5e7eb; color:#111827; }
-
-.btn:hover { opacity:.92; }
-
-/* Page Header (Title + Button) */
-.page-header,
-.card-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-/* Prevent table overflow */
-.table-scroll {
-  width: 100%;
-  max-width: 100%;
-  overflow-y: hidden;
-  display: block;
-}
-
-
-
-
-/* Action buttons stay in one line */
-.table-actions {
-  display: flex;
-  gap: 8px;
-  white-space: nowrap;
-  justify-content: flex-start;
-  align-items: center;
-} 

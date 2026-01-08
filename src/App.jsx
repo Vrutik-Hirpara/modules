@@ -13,6 +13,7 @@ import "./styles/theme.css";
 import Category from "./pages/Category";
 import Articles from "./pages/Articles";
 import Modules from "./pages/Modules";
+import Topics from "./pages/Topics";
 
 
 
@@ -31,7 +32,7 @@ export default function App() {
         <Route path="/articles" element={<Articles />} />
         <Route path="/module" element={<Modules />} />
 
-        <Route path="/topics" element={<Modules />} />
+        <Route path="/topics" element={<Topics />} />
 
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Route>

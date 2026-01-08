@@ -111,7 +111,7 @@ export default function Courses() {
                         <h2>Courses</h2>
 
                         <button
-                            className="btn btn-primary"
+                            className="btn btn-primary mb-2"
                             onClick={() => { reset(); setShowForm(true); }}
                         >
                             Add Course

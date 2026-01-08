@@ -95,7 +95,7 @@ export default function Articles() {
             <h2>Articles</h2>
 
             <button
-              className="btn btn-primary"
+              className="btn btn-primary mb-2"
               onClick={() => { setShowForm(true); reset(); }}
             >
               Add Article
@@ -109,7 +109,7 @@ export default function Articles() {
                   <th className="table-img">Image</th>
                   <th>Title / Tag</th>
                   <th>Course</th>
-                  <th>Description</th>
+                  <th className="wrap-col">Description</th>
                   <th className="table-actions">Actions</th>
                 </tr>
               </thead>
@@ -125,7 +125,7 @@ export default function Articles() {
 
                     <td>{row.tag}</td>
                     <td>{row.course_data?.name}</td>
-                    <td>{row.description?.slice(0, 40)}...</td>
+                    <td className="wrap-col">{row.description?.slice(0, 40)}...</td>
 
                     <td className="table-actions">
                       <button className="btn btn-info btn-sm"

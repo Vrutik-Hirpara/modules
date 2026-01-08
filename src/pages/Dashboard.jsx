@@ -1,162 +1,422 @@
+// import { useEffect, useState } from "react";
+// import "../styles/dashboard.css";
+
+// const API = "https://codingcloud.pythonanywhere.com";
+
+// export default function Dashboard() {
+
+//   const [stats, setStats] = useState({
+//     faqs: 0,
+//     testimonials: 0,
+//     categories: 0,
+//     courses: 0,
+//     articles: 0,
+//     modules: 0,
+//     topics: 0
+//   });
+
+// const fetchCount = async (url) => {
+//   const res = await fetch(url);
+//   const data = await res.json();
+
+//   // CASE 1: API returns array directly
+//   if (Array.isArray(data)) {
+//     return data.length;
+//   }
+
+//   // CASE 2: { data: [] }
+//   if (Array.isArray(data?.data)) {
+//     return data.data.length;
+//   }
+
+//   // CASE 3: { results: [] } (pagination)
+//   if (Array.isArray(data?.results)) {
+//     return data.results.length;
+//   }
+
+//   return 0;
+// };
+
+
+//   useEffect(() => {
+//     const loadStats = async () => {
+//       const [
+//         faqs,
+//         testimonials,
+//         categories,
+//         courses,
+//         articles,
+//         modules,
+//         topics
+//       ] = await Promise.all([
+//         fetchCount(`${API}/faqs/`),
+//         fetchCount(`${API}/testimonials/`),
+//         fetchCount(`${API}/category/`),
+//         fetchCount(`${API}/course/`),
+//         fetchCount(`${API}/articles/`),
+//         fetchCount(`${API}/modules/`),
+//         fetchCount(`${API}/topics/`)
+//       ]);
+
+//       setStats({
+//         faqs,
+//         testimonials,
+//         categories,
+//         courses,
+//         articles,
+//         modules,
+//         topics
+//       });
+//     };
+
+//     loadStats();
+//   }, []);
+
+//   return (
+//     <div className="page-wrapper dashboard">
+
+//       <div className="welcome-banner">
+//         <div>
+//           <h3>Welcome back 👋</h3>
+//           <p>Here’s what’s happening in your platform</p>
+//         </div>
+//       </div>
+
+//       <div className="stats-grid">
+//         <div className="stat-card blue">
+//           <h4>{stats.courses}</h4>
+//           <p>Courses</p>
+//         </div>
+
+//         <div className="stat-card purple">
+//           <h4>{stats.categories}</h4>
+//           <p>Categories</p>
+//         </div>
+
+//         <div className="stat-card green">
+//           <h4>{stats.articles}</h4>
+//           <p>Articles</p>
+//         </div>
+
+//         <div className="stat-card orange">
+//           <h4>{stats.modules}</h4>
+//           <p>Modules</p>
+//         </div>
+
+//         <div className="stat-card cyan">
+//           <h4>{stats.topics}</h4>
+//           <p>Topics</p>
+//         </div>
+
+//         <div className="stat-card pink">
+//           <h4>{stats.testimonials}</h4>
+//           <p>Testimonials</p>
+//         </div>
+
+//         <div className="stat-card dark">
+//           <h4>{stats.faqs}</h4>
+//           <p>FAQs</p>
+//         </div>
+//       </div>
+
+//       <footer className="dashboard-footer">
+//         © {new Date().getFullYear()} CodingCloud Admin Panel
+//       </footer>
+
+//     </div>
+//   );
+// }import { useEffect, useState } from "react";
+
+
+
+// import "../styles/dashboard.css";
+// import { useNavigate } from "react-router-dom";
+// import { useEffect,useState } from "react";
+
+// const API = "https://codingcloud.pythonanywhere.com";
+
+// export default function Dashboard() {
+//   const navigate = useNavigate();
+
+//   const [stats, setStats] = useState({
+//     categories: 0,
+//     courses: 0,
+//     modules: 0,
+//     topics: 0,
+//     articles: 0,
+//     testimonials: 0
+//   });
+
+//   const fetchCount = async (url) => {
+//     const res = await fetch(url);
+//     const data = await res.json();
+//     return Array.isArray(data) ? data.length : data?.data?.length || 0;
+//   };
+
+//   useEffect(() => {
+//     const loadStats = async () => {
+//       const [
+//         categories,
+//         courses,
+//         modules,
+//         topics,
+//         articles,
+//         testimonials
+//       ] = await Promise.all([
+//         fetchCount(`${API}/category/`),
+//         fetchCount(`${API}/course/`),
+//         fetchCount(`${API}/modules/`),
+//         fetchCount(`${API}/topics/`),
+//         fetchCount(`${API}/articles/`),
+//         fetchCount(`${API}/testimonials/`)
+//       ]);
+
+//       setStats({
+//         categories,
+//         courses,
+//         modules,
+//         topics,
+//         articles,
+//         testimonials
+//       });
+//     };
+
+//     loadStats();
+//   }, []);
+
+//   return (
+//     <div className="page-wrapper dashboard">
+//       <h2 className="dashboard-title">Dashboard</h2>
+
+//       <div className="dashboard-grid">
+
+//         <StatCard
+//           title="Categories"
+//           value={stats.categories}
+//           color="purple"
+//           icon="📁"
+//           to="/category"
+//           navigate={navigate}
+//         />
+
+//         <StatCard
+//           title="Courses"
+//           value={stats.courses}
+//           color="green"
+//           icon="📘"
+//           to="/course"
+//           navigate={navigate}
+//         />
+
+//         <StatCard
+//           title="Modules"
+//           value={stats.modules}
+//           color="orange"
+//           icon="📦"
+//           to="/module"
+//           navigate={navigate}
+//         />
+
+//         <StatCard
+//           title="Topics"
+//           value={stats.topics}
+//           color="blue"
+//           icon="📚"
+//           to="/topics"
+//           navigate={navigate}
+//         />
+
+//         <StatCard
+//           title="Articles"
+//           value={stats.articles}
+//           color="red"
+//           icon="📄"
+//           to="/articles"
+//           navigate={navigate}
+//         />
+
+//         <StatCard
+//           title="Testimonials"
+//           value={stats.testimonials}
+//           color="violet"
+//           icon="💬"
+//           to="/testimonials"
+//           navigate={navigate}
+//         />
+
+//       </div>
+//     </div>
+//   );
+// }
+
+// function StatCard({ title, value, color, icon, to, navigate }) {
+//   return (
+//     <div
+//       className="dashboard-card"
+//       style={{ cursor: "pointer" }}
+//       onClick={() => navigate(to)}
+//     >
+//       <div>
+//         <p className="card-label">{title}</p>
+//         <h3 className="card-value">{value}</h3>
+//       </div>
+
+//       <div className={`card-icon ${color}`}>
+//         {icon}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+import { useEffect, useState } from "react";
 import "../styles/dashboard.css";
+import { useNavigate } from "react-router-dom";
+
+const API = "https://codingcloud.pythonanywhere.com";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
+  const [stats, setStats] = useState({
+    banners: 0,
+    categories: 0,
+    courses: 0,
+    modules: 0,
+    topics: 0,
+    articles: 0,
+    testimonials: 0
+  });
+
+  const fetchCount = async (url) => {
+    const res = await fetch(url);
+    const data = await res.json();
+    return Array.isArray(data) ? data.length : data?.data?.length || 0;
+  };
+
+  useEffect(() => {
+    const loadStats = async () => {
+      const [
+        banners,
+        categories,
+        courses,
+        modules,
+        topics,
+        articles,
+        testimonials
+      ] = await Promise.all([
+        fetchCount(`${API}/banners/`),
+        fetchCount(`${API}/category/`),
+        fetchCount(`${API}/course/`),
+        fetchCount(`${API}/modules/`),
+        fetchCount(`${API}/topics/`),
+        fetchCount(`${API}/articles/`),
+        fetchCount(`${API}/testimonials/`)
+      ]);
+
+      setStats({
+        banners,
+        categories,
+        courses,
+        modules,
+        topics,
+        articles,
+        testimonials
+      });
+    };
+
+    loadStats();
+  }, []);
+
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper dashboard">
+      <h2 className="dashboard-title">Dashboard</h2>
 
-      {/* Hero */}
-      <div className="welcome-banner">
-        <div>
-          <h4>
-            Welcome back, <span>John</span> 👋
-          </h4>
-          <p>Your performance summary for today</p>
-        </div>
+      <div className="dashboard-grid">
 
-        <button className="primary-btn">View Report</button>
+        <StatCard
+          title="Banners"
+          value={stats.banners}
+          color="cyan"
+          icon="🖼️"
+          to="/banners"
+          navigate={navigate}
+        />
+
+        <StatCard
+          title="Categories"
+          value={stats.categories}
+          color="purple"
+          icon="📁"
+          to="/category"
+          navigate={navigate}
+        />
+
+        <StatCard
+          title="Courses"
+          value={stats.courses}
+          color="green"
+          icon="📘"
+          to="/course"
+          navigate={navigate}
+        />
+
+        <StatCard
+          title="Modules"
+          value={stats.modules}
+          color="orange"
+          icon="📦"
+          to="/module"
+          navigate={navigate}
+        />
+
+        <StatCard
+          title="Topics"
+          value={stats.topics}
+          color="blue"
+          icon="📚"
+          to="/topics"
+          navigate={navigate}
+        />
+
+        <StatCard
+          title="Articles"
+          value={stats.articles}
+          color="red"
+          icon="📄"
+          to="/articles"
+          navigate={navigate}
+        />
+
+        <StatCard
+          title="Testimonials"
+          value={stats.testimonials}
+          color="violet"
+          icon="💬"
+          to="/testimonials"
+          navigate={navigate}
+        />
+
       </div>
-
-      {/* Stats */}
-      <div className="stats-grid">
-        <div className="stat-card">
-          <i className="bx bx-trending-up icon"></i>
-          <h5>Sales Today</h5>
-          <h2>₹ 12,450</h2>
-          <span className="badge success">+72%</span>
-        </div>
-
-        <div className="stat-card">
-          <i className="bx bx-user icon"></i>
-          <h5>New Users</h5>
-          <h2>48</h2>
-          <span className="badge info">+18%</span>
-        </div>
-
-        <div className="stat-card">
-          <i className="bx bx-cart icon"></i>
-          <h5>Orders</h5>
-          <h2>112</h2>
-          <span className="badge warning">+9%</span>
-        </div>
-
-        <div className="stat-card">
-          <i className="bx bx-time-five icon"></i>
-          <h5>Pending Tasks</h5>
-          <h2>07</h2>
-          <span className="badge danger">-3%</span>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="footer">
-        © {new Date().getFullYear()} Sneat Admin Panel
-      </footer>
-
     </div>
   );
 }
 
+function StatCard({ title, value, color, icon, to, navigate }) {
+  return (
+    <div
+      className="dashboard-card"
+      style={{ cursor: "pointer" }}
+      onClick={() => navigate(to)}
+    >
+      <div>
+        <p className="card-label">{title}</p>
+        <h3 className="card-value">{value}</h3>
+      </div>
 
-
-
-// import { Link } from "react-router-dom";
-
-// const Dashboard = () => {
-//   return (
-//     <div className="layout-wrapper layout-content-navbar">
-//       <div className="layout-container">
-
-//         {/* Sidebar */}
-//         <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
-
-//           <div className="app-brand demo">
-//             <Link to="/dashboard" className="app-brand-link">
-//               <span className="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
-//             </Link>
-//           </div>
-
-//           <div className="menu-inner-shadow"></div>
-
-//           <ul className="menu-inner py-1">
-
-//             <li className="menu-item active">
-//               <Link to="/dashboard" className="menu-link">
-//                 <i className="menu-icon tf-icons bx bx-home-circle"></i>
-//                 <div>Dashboard</div>
-//               </Link>
-//             </li>
-
-//             <li className="menu-item">
-//               <Link to="/bed" className="menu-link">
-//                 <i className="menu-icon tf-icons bx bx-bed"></i>
-//                 <div>Bed</div>
-//               </Link>
-//             </li>
-
-//           </ul>
-//         </aside>
-//         {/* /Sidebar */}
-
-//         {/* Page */}
-//         <div className="layout-page">
-
-//           {/* Navbar */}
-//           <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached bg-navbar-theme">
-
-//             <div className="navbar-nav-right d-flex align-items-center">
-
-//               <div className="nav-item d-flex align-items-center">
-//                 <i className="bx bx-search fs-4 lh-0"></i>
-//                 <input
-//                   type="text"
-//                   className="form-control border-0 shadow-none"
-//                   placeholder="Search..."
-//                 />
-//               </div>
-
-//               <ul className="navbar-nav flex-row align-items-center ms-auto">
-//                 <li className="nav-item">
-//                   <img
-//                     src="/assets/img/avatars/1.png"
-//                     alt="user"
-//                     className="w-px-40 h-auto rounded-circle"
-//                   />
-//                 </li>
-//               </ul>
-
-//             </div>
-//           </nav>
-//           {/* /Navbar */}
-
-//           {/* Content */}
-//           <div className="content-wrapper">
-//             <div className="container-xxl flex-grow-1 container-p-y">
-
-//               <div className="row">
-//                 <div className="col-lg-8 mb-4 order-0">
-//                   <div className="card">
-//                     <div className="card-body">
-//                       <h5 className="card-title text-primary">Congratulations John! 🎉</h5>
-//                       <p>You have done 72% more sales today.</p>
-//                       <Link className="btn btn-sm btn-outline-primary">View Badges</Link>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-
-//             </div>
-
-//             <footer className="content-footer footer bg-footer-theme">
-//               <div className="container-xxl py-2">
-//                 © {new Date().getFullYear()} Sneat Admin Panel
-//               </div>
-//             </footer>
-//           </div>
-//           {/* /Content */}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
+      <div className={`card-icon ${color}`}>
+        {icon}
+      </div>
+    </div>
+  );
+}
