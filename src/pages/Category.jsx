@@ -58,15 +58,18 @@ export default function Category() {
     });
   };
 
-  const handleView = (row) => {
-    setViewData(row);
-    setEditId(null);
-    setShowForm(true);
-    reset({
-      name: row.name,
-      text: row.text
-    });
-  };
+const handleView = (row) => {
+  setViewData(row);
+  setEditId(null);
+  setCurrentImage(row.image);   // ✅ FIX
+  setShowForm(true);
+
+  reset({
+    name: row.name,
+    text: row.text
+  });
+};
+
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete category?")) return;

@@ -12,6 +12,7 @@ import { getCategories } from "../services/category.service";
 import { buildImageUrl } from "../services/image.helper";
 
 export default function Courses() {
+
   const [list, setList] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -34,7 +35,7 @@ export default function Courses() {
     }
   });
 
-  // ---------- LOAD DATA ----------
+  // ================= LOAD DATA =================
   const fetchData = async () => {
     const courseData = await getCourses();
     const categoryData = await getCategories();
@@ -49,41 +50,40 @@ export default function Courses() {
 
   const isView = Boolean(viewData);
 
-  // ---------- SUBMIT ----------
+  // ================= SUBMIT =================
   const onSubmit = async (values) => {
     if (isView) return;
 
-    try {
-      const fd = new FormData();
+    const fd = new FormData();
 
-      fd.append("category", Number(values.category));
-      fd.append("name", values.name);
-      fd.append("text", values.text);
-      fd.append("duration", values.duration);
-      fd.append("lecture", values.lecture);
-      fd.append("students", values.students);
-      fd.append("level", values.level);
-      fd.append("language", values.language);
-      fd.append("certificate", values.certificate);
+    fd.append("category", Number(values.category));
+    fd.append("name", values.name);
+    fd.append("text", values.text);
+    fd.append("duration", values.duration);
+    fd.append("lecture", values.lecture);
+    fd.append("students", values.students);
+    fd.append("level", values.level);
+    fd.append("language", values.language);
+    fd.append("certificate", values.certificate);
 
-      if (values.image?.[0]) {
-        fd.append("image", values.image[0]); // ✅ only one image
-      }
-
-      editId
-        ? await updateCourse(editId, fd)
-        : await createCourse(fd);
-
-      reset();
-      setEditId(null);
-      setShowForm(false);
-      fetchData();
-    } catch (err) {
-      console.log("API ERROR 👉", err.response?.data);
+    // image optional on edit
+    if (values.image?.[0]) {
+      fd.append("image", values.image[0]);
     }
+
+    editId
+      ? await updateCourse(editId, fd)
+      : await createCourse(fd);
+
+    reset();
+    setEditId(null);
+    setViewData(null);
+    setCurrentImage(null);
+    setShowForm(false);
+    fetchData();
   };
 
-  // ---------- ACTIONS ----------
+  // ================= ACTIONS =================
   const handleEdit = (row) => {
     setEditId(row.id);
     setViewData(null);
@@ -128,9 +128,11 @@ export default function Courses() {
     fetchData();
   };
 
-  // ---------- UI ----------
+  // ================= UI =================
   return (
     <div className="page-wrapper">
+
+      {/* ================= LIST ================= */}
       {!showForm ? (
         <>
           <div className="card-header-row">
@@ -154,10 +156,10 @@ export default function Courses() {
             <table className="table-pro table-admin">
               <thead>
                 <tr>
-                  <th className="table-img">Image</th>
-                  <th className="name-col">Name</th>
+                  <th>Image</th>
+                  <th>Name</th>
                   <th>Category</th>
-                  <th className="desc-col">Description</th>
+                  <th>Description</th>
                   <th>Duration</th>
                   <th>Lecture</th>
                   <th>Students</th>
@@ -169,14 +171,15 @@ export default function Courses() {
               </thead>
 
               <tbody>
-                {list.map((row) => (
+                {list.map(row => (
                   <tr key={row.id}>
-                    <td className="table-img">
+                    <td>
                       {row.image ? (
                         <img
                           src={buildImageUrl(row.image)}
                           width={60}
                           height={60}
+                          className="rounded"
                           style={{ objectFit: "cover" }}
                         />
                       ) : (
@@ -184,9 +187,9 @@ export default function Courses() {
                       )}
                     </td>
 
-                    <td className="name-col">{row.name}</td>
+                    <td>{row.name}</td>
                     <td>{row.category_details?.name}</td>
-                    <td className="desc-col">{row.text}</td>
+                    <td className="wrap-col">{row.text}</td>
                     <td>{row.duration}</td>
                     <td>{row.lecture}</td>
                     <td>{row.students}</td>
@@ -219,22 +222,395 @@ export default function Courses() {
                   </tr>
                 ))}
               </tbody>
+
             </table>
           </div>
         </>
       ) : (
+
+        /* ================= FORM ================= */
         <div className="card p-3 shadow">
           <h4>
             {isView ? "View Course" : editId ? "Update Course" : "Add Course"}
           </h4>
 
-          {/* FORM */}
-          {/* Your form JSX stays exactly as you wrote — it is already correct */}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="row mt-2">
+
+              {/* CATEGORY */}
+              <div className="col-md-6">
+                <label>Category</label>
+                <select
+                  className="form-control"
+                  {...register("category")}
+                  disabled={isView}
+                >
+                  <option value="">Select Category</option>
+                  {categories.map(c => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* NAME */}
+              <div className="col-md-6">
+                <label>Course Name</label>
+                <input
+                  className="form-control"
+                  {...register("name")}
+                  disabled={isView}
+                />
+              </div>
+
+              {/* DESCRIPTION */}
+              <div className="col-md-12 mt-2">
+                <label>Description</label>
+                <textarea
+                  rows={3}
+                  className="form-control"
+                  {...register("text")}
+                  disabled={isView}
+                />
+              </div>
+
+              {/* DETAILS */}
+              <div className="col-md-4 mt-2">
+                <label>Duration</label>
+                <input className="form-control" {...register("duration")} disabled={isView} />
+              </div>
+
+              <div className="col-md-4 mt-2">
+                <label>Lectures</label>
+                <input className="form-control" {...register("lecture")} disabled={isView} />
+              </div>
+
+              <div className="col-md-4 mt-2">
+                <label>Students</label>
+                <input className="form-control" {...register("students")} disabled={isView} />
+              </div>
+
+              <div className="col-md-4 mt-2">
+                <label>Level</label>
+                <input className="form-control" {...register("level")} disabled={isView} />
+              </div>
+
+              <div className="col-md-4 mt-2">
+                <label>Language</label>
+                <input className="form-control" {...register("language")} disabled={isView} />
+              </div>
+
+              <div className="col-md-4 mt-2">
+                <label>Certificate</label>
+                <input className="form-control" {...register("certificate")} disabled={isView} />
+              </div>
+
+              {/* IMAGE (VIEW + EDIT) */}
+              <div className="col-md-12 mt-2">
+                <label>Course Image</label>
+
+                {currentImage && (
+                  <img
+                    src={buildImageUrl(currentImage)}
+                    width={120}
+                    className="d-block mb-2 border rounded"
+                  />
+                )}
+
+                {!isView && (
+                  <input
+                    type="file"
+                    className="form-control"
+                    {...register("image")}
+                  />
+                )}
+              </div>
+
+            </div>
+
+            {/* ACTIONS */}
+            <div className="mt-3">
+              <button
+                type="button"
+                className="btn btn-secondary me-2"
+                onClick={() => {
+                  reset();
+                  setShowForm(false);
+                  setEditId(null);
+                  setViewData(null);
+                  setCurrentImage(null);
+                }}
+              >
+                Back to List
+              </button>
+
+              {!isView && (
+                <button type="submit" className="btn btn-primary">
+                  {editId ? "Save Changes" : "Add Course"}
+                </button>
+              )}
+            </div>
+
+          </form>
         </div>
       )}
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useState, useEffect } from "react";
+// import { useForm } from "react-hook-form";
+
+// import {
+//   getCourses,
+//   createCourse,
+//   updateCourse,
+//   deleteCourse
+// } from "../services/course.service";
+
+// import { getCategories } from "../services/category.service";
+// import { buildImageUrl } from "../services/image.helper";
+
+// export default function Courses() {
+//   const [list, setList] = useState([]);
+//   const [categories, setCategories] = useState([]);
+
+//   const [editId, setEditId] = useState(null);
+//   const [showForm, setShowForm] = useState(false);
+//   const [viewData, setViewData] = useState(null);
+//   const [currentImage, setCurrentImage] = useState(null);
+
+//   const { register, handleSubmit, reset } = useForm({
+//     defaultValues: {
+//       category: "",
+//       name: "",
+//       text: "",
+//       duration: "",
+//       lecture: "",
+//       students: "",
+//       level: "",
+//       language: "",
+//       certificate: ""
+//     }
+//   });
+
+//   // ---------- LOAD DATA ----------
+//   const fetchData = async () => {
+//     const courseData = await getCourses();
+//     const categoryData = await getCategories();
+
+//     setList(courseData);
+//     setCategories(categoryData);
+//   };
+
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
+
+//   const isView = Boolean(viewData);
+
+//   // ---------- SUBMIT ----------
+//   const onSubmit = async (values) => {
+//     if (isView) return;
+
+//     try {
+//       const fd = new FormData();
+
+//       fd.append("category", Number(values.category));
+//       fd.append("name", values.name);
+//       fd.append("text", values.text);
+//       fd.append("duration", values.duration);
+//       fd.append("lecture", values.lecture);
+//       fd.append("students", values.students);
+//       fd.append("level", values.level);
+//       fd.append("language", values.language);
+//       fd.append("certificate", values.certificate);
+
+//       if (values.image?.[0]) {
+//         fd.append("image", values.image[0]); // ✅ only one image
+//       }
+
+//       editId
+//         ? await updateCourse(editId, fd)
+//         : await createCourse(fd);
+
+//       reset();
+//       setEditId(null);
+//       setShowForm(false);
+//       fetchData();
+//     } catch (err) {
+//       console.log("API ERROR 👉", err.response?.data);
+//     }
+//   };
+
+//   // ---------- ACTIONS ----------
+//   const handleEdit = (row) => {
+//     setEditId(row.id);
+//     setViewData(null);
+//     setCurrentImage(row.image);
+//     setShowForm(true);
+
+//     reset({
+//       category: row.category,
+//       name: row.name,
+//       text: row.text,
+//       duration: row.duration,
+//       lecture: row.lecture,
+//       students: row.students,
+//       level: row.level,
+//       language: row.language,
+//       certificate: row.certificate
+//     });
+//   };
+
+//   const handleView = (row) => {
+//     setViewData(row);
+//     setEditId(null);
+//     setCurrentImage(row.image);
+//     setShowForm(true);
+
+//     reset({
+//       category: row.category,
+//       name: row.name,
+//       text: row.text,
+//       duration: row.duration,
+//       lecture: row.lecture,
+//       students: row.students,
+//       level: row.level,
+//       language: row.language,
+//       certificate: row.certificate
+//     });
+//   };
+
+//   const handleDelete = async (id) => {
+//     if (!window.confirm("Delete course?")) return;
+//     await deleteCourse(id);
+//     fetchData();
+//   };
+
+//   // ---------- UI ----------
+//   return (
+//     <div className="page-wrapper">
+//       {!showForm ? (
+//         <>
+//           <div className="card-header-row">
+//             <h2>Courses</h2>
+
+//             <button
+//               className="btn btn-primary mb-2"
+//               onClick={() => {
+//                 reset();
+//                 setEditId(null);
+//                 setViewData(null);
+//                 setCurrentImage(null);
+//                 setShowForm(true);
+//               }}
+//             >
+//               Add Course
+//             </button>
+//           </div>
+
+//           <div className="table-scroll">
+//             <table className="table-pro table-admin">
+//               <thead>
+//                 <tr>
+//                   <th className="table-img">Image</th>
+//                   <th className="name-col">Name</th>
+//                   <th>Category</th>
+//                   <th className="desc-col">Description</th>
+//                   <th>Duration</th>
+//                   <th>Lecture</th>
+//                   <th>Students</th>
+//                   <th>Level</th>
+//                   <th>Language</th>
+//                   <th>Certificate</th>
+//                   <th className="table-actions">Actions</th>
+//                 </tr>
+//               </thead>
+
+//               <tbody>
+//                 {list.map((row) => (
+//                   <tr key={row.id}>
+//                     <td className="table-img">
+//                       {row.image ? (
+//                         <img
+//                           src={buildImageUrl(row.image)}
+//                           width={60}
+//                           height={60}
+//                           style={{ objectFit: "cover" }}
+//                         />
+//                       ) : (
+//                         "No Image"
+//                       )}
+//                     </td>
+
+//                     <td className="name-col">{row.name}</td>
+//                     <td>{row.category_details?.name}</td>
+//                     <td className="desc-col">{row.text}</td>
+//                     <td>{row.duration}</td>
+//                     <td>{row.lecture}</td>
+//                     <td>{row.students}</td>
+//                     <td>{row.level}</td>
+//                     <td>{row.language}</td>
+//                     <td>{row.certificate}</td>
+
+//                     <td className="table-actions">
+//                       <button
+//                         className="btn btn-info btn-sm"
+//                         onClick={() => handleView(row)}
+//                       >
+//                         View
+//                       </button>
+
+//                       <button
+//                         className="btn btn-warning btn-sm ms-2"
+//                         onClick={() => handleEdit(row)}
+//                       >
+//                         Edit
+//                       </button>
+
+//                       <button
+//                         className="btn btn-danger btn-sm ms-2"
+//                         onClick={() => handleDelete(row.id)}
+//                       >
+//                         Delete
+//                       </button>
+//                     </td>
+//                   </tr>
+//                 ))}
+//               </tbody>
+//             </table>
+//           </div>
+//         </>
+//       ) : (
+//         <div className="card p-3 shadow">
+//           <h4>
+//             {isView ? "View Course" : editId ? "Update Course" : "Add Course"}
+//           </h4>
+
+//           {/* FORM */}
+//           {/* Your form JSX stays exactly as you wrote — it is already correct */}
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
 
 
 
